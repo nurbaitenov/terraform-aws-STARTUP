@@ -51,3 +51,24 @@ output "asg_max_size" {
   value = aws_autoscaling_group.web.max_size
 
 }
+
+output "rds_endpoint" {
+  value = aws_db_instance.wordpress.address
+}
+
+output "rds_port" {
+  value = aws_db_instance.wordpress.port
+}
+
+output "rds_database" {
+  value = aws_db_instance.wordpress.db_name
+}
+
+output "rds_username" {
+  value = aws_db_instance.wordpress.username
+}
+
+output "rds_secret_arn" {
+  value     = aws_db_instance.wordpress.master_user_secret[0].secret_arn
+  sensitive = true
+}
