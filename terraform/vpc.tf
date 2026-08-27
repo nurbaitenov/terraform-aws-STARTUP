@@ -23,17 +23,28 @@ resource "aws_internet_gateway" "main" {
 }
 
 # --------------------
-# Public Subnet
+# Public Subnets 1,2
 # --------------------
 
-resource "aws_subnet" "public" {
+resource "aws_subnet" "public1" {
   vpc_id                  = aws_vpc.main.id
   cidr_block              = "10.0.1.0/24"
   availability_zone       = "us-east-1a"
   map_public_ip_on_launch = true
 
   tags = {
-    Name = "terraform-public-subnet"
+    Name = "terraform-public-subnet1"
+  }
+}
+
+resource "aws_subnet" "public2" {
+  vpc_id                  = aws_vpc.main.id
+  cidr_block              = "10.0.1.0/24"
+  availability_zone       = "us-east-1b"
+  map_public_ip_on_launch = true
+
+  tags = {
+    Name = "terraform-public-subnet2"
   }
 }
 
@@ -56,9 +67,13 @@ resource "aws_route_table" "public" {
 
 # Associate subnet with route table
 
-resource "aws_route_table_association" "public" {
+resource "aws_route_table_association" "public1" {
   subnet_id      = aws_subnet.public.id
   route_table_id = aws_route_table.public.id
 }
 
+resource "aws_route_table_association" "public2" {
+  subnet_id      = aws_subnet.public.id
+  route_table_id = aws_route_table.public.id
+}
 
